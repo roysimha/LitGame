@@ -3,43 +3,44 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
 
-public class FinishScript : MonoBehaviour {
+public class FinishScript : MonoBehaviour
+{
 
     private GameObject FinishPanel;
 
     private GameObject mirror;
     private mirrorController mc;
     private LightBeamController2 lbc;
-	private int prismHit=0;
-	private GameController gc;
+    private int prismHit = 0;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         Debug.Log("start");
-		gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();   
 
         FinishPanel = GameObject.FindGameObjectWithTag("FinishPanel");
         lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
         mc = GameObject.FindGameObjectWithTag("mirror").GetComponent<mirrorController>();
         FinishPanel.SetActive(false);
     }
-	public void addHit(){
-		prismHit++;
+    public void addHit()
+    {
+        prismHit++;
 
-	}
-	// Update is called once per frame
-	void Update () {
-		if (lbc.isFinish||prismHit==2)
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (lbc.isFinish || prismHit == 2)
         {
             StartCoroutine(FinishLevel());
-			
+
         }
-	}
+    }
 
     private IEnumerator FinishLevel()
     {
         yield return new WaitForSeconds(5);
-        int curFireFly = gc.getScore();
-        //int curScore = gc.getGlobalScore();
+        int curFireFly = GameController.controller.m_CurLvllFireFlies;
         for (int i = 3; i < curFireFly + 3; i++)
         {
             // disable black firefly
@@ -56,6 +57,10 @@ public class FinishScript : MonoBehaviour {
         lbc.enabled = false;
         mc.enabled = false;
         Time.timeScale = 0;
+        GameController.controller.m_LevelsCompleted++;
+        GameController.controller.UpdatePlayerData();
+        Debug.Log(string.Format("Fireflys = {0}, LevelCompleted = {1}, Score = {2}", GameController.controller.m_CurLvllFireFlies, GameController.controller.m_LevelsCompleted, GameController.controller.m_GlobalScore));
+        GameController.controller.m_CurLvllFireFlies = 0;
     }
 
     public void Retry()
@@ -71,7 +76,7 @@ public class FinishScript : MonoBehaviour {
     public void NextLevel()
     {
         int gameLevel = SceneManager.GetActiveScene().buildIndex;
-		gameLevel++;
+        gameLevel++;
         SceneManager.LoadScene(gameLevel);
 
     }

@@ -12,6 +12,7 @@ public class menuScript : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        GameController.controller.Load();
         quitMenu = quitMenu.GetComponent<Canvas>();
         startText = startText.GetComponent<Button>();
         exitText = exitText.GetComponent<Button>();
@@ -42,7 +43,13 @@ public class menuScript : MonoBehaviour {
         settingsText.enabled = true;
         exitText.enabled = true;
     }
+      
+    public void DeleteSave()
+    {
+        GameController.controller.DeleteSave();
         
+    }
+      
     public void startPressed()
     {
         SceneManager.LoadScene(1);
