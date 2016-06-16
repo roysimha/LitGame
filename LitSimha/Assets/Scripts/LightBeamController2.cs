@@ -1,6 +1,8 @@
 ﻿
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+
 using System;
 
 [RequireComponent (typeof(LineRenderer))]
@@ -23,6 +25,9 @@ public class LightBeamController2 : MonoBehaviour
 	bool prismHit = true;
 	private int numOfPrismsInScene = 0;
 	private ParticleHandler phChild;
+    public UnityEvent OnFinished;
+    public UnityEvent NotFinished;
+    private bool m_isFinished;
 	// Use this for initialization
 	void Start ()
 	{
@@ -74,6 +79,7 @@ public class LightBeamController2 : MonoBehaviour
 		int vertexCounter = 1; //How many line segments are there
 		bool loopActive = true; //Is the reflecting loop active?
 		bool prismSet = false;
+        m_isFinished = false;
         ph.startNewIteration();
         phChild.startNewIteration();
         Vector3 laserDirection = transform.right; //direction of the next laser
@@ -88,13 +94,14 @@ public class LightBeamController2 : MonoBehaviour
 			if ((Physics.Raycast (ray, out hit, laserDistance))) {
 				switch (hit.transform.gameObject.tag) {
 				case "Finish":
+                        OnFinished.Invoke();
                         currentHitParticleHandler = hit.transform.gameObject.GetComponent<ParticleHandler>();
                         currentHitParticleHandler.setActivetoFalse();
                         currentHitParticleHandler.startNewIteration();
                         currentHitParticleHandler.addParticle(hit.point);
                         hitFinishObject (ref vertexCounter, hit.point);
                         loopActive = false;
-                        
+                        m_isFinished = true;
 					break;
 
 				case "portal":
@@ -155,9 +162,9 @@ public class LightBeamController2 : MonoBehaviour
 			resetPrisms ();
            
 		}
-        if (currentHitParticleHandler != null)
+        if (m_isFinished == false)
         {
-           // currentHitParticleHandler.DestroyParticles();
+            NotFinished.Invoke();
         }
 		if (LaserDown) {
 			yield return new WaitForEndOfFrame ();

@@ -20,9 +20,8 @@ public class mirrorController : MonoBehaviour
 		maxangle = maxangle + transform.eulerAngles.z;
 		rotation = transform.eulerAngles.z;
 		lbc = GameObject.FindGameObjectWithTag ("Player").GetComponent<LightBeamController2> ();
-
-		//turnOffHit ();
-	}
+        //turnOffHit ();
+    }
 
 	// Update is called once per frame
 	void Update ()

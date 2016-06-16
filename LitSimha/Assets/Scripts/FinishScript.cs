@@ -6,7 +6,7 @@ using System;
 public class FinishScript : MonoBehaviour {
 
     private GameObject FinishPanel;
-
+    private bool m_isFinished;
     private GameObject mirror;
     private mirrorController mc;
     private LightBeamController2 lbc;
@@ -19,43 +19,58 @@ public class FinishScript : MonoBehaviour {
 
         FinishPanel = GameObject.FindGameObjectWithTag("FinishPanel");
         lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
+        lbc.OnFinished.AddListener(finishTheLevel);
+        lbc.NotFinished.AddListener(setFinishToFalse);
         mc = GameObject.FindGameObjectWithTag("mirror").GetComponent<mirrorController>();
         FinishPanel.SetActive(false);
+        m_isFinished = false;
     }
-	public void addHit(){
-		prismHit++;
 
+    private void setFinishToFalse()
+    {
+        m_isFinished = false;
+    }
+
+    public void addHit(){
+		prismHit++;
+        if (prismHit == 2)
+            lbc.OnFinished.Invoke();
 	}
+    private void finishTheLevel()
+    {
+        m_isFinished = true;
+        StartCoroutine(FinishLevel());
+    }
 	// Update is called once per frame
-	void Update () {
-		if (lbc.isFinish||prismHit==2)
-        {
-            StartCoroutine(FinishLevel());
-			
-        }
+	void Update ()
+    {
 	}
 
     private IEnumerator FinishLevel()
     {
         yield return new WaitForSeconds(5);
-        int curFireFly = gc.getScore();
-        //int curScore = gc.getGlobalScore();
-        for (int i = 3; i < curFireFly + 3; i++)
+        if (m_isFinished)
         {
-            // disable black firefly
-            GameObject fireflyblack = FinishPanel.transform.GetChild(i + 3).transform.gameObject;
-            fireflyblack.SetActive(false);
+            int curFireFly = gc.getScore();
+            //int curScore = gc.getGlobalScore();
+            for (int i = 3; i < curFireFly + 3; i++)
+            {
+                // disable black firefly
+                GameObject fireflyblack = FinishPanel.transform.GetChild(i + 3).transform.gameObject;
+                fireflyblack.SetActive(false);
 
-            // enable firefly
-            GameObject firefly1 = FinishPanel.transform.GetChild(i).transform.gameObject;
-            firefly1.SetActive(true);
+                // enable firefly
+                GameObject firefly1 = FinishPanel.transform.GetChild(i).transform.gameObject;
+                firefly1.SetActive(true);
 
+            }
+            Debug.Log("finished");
+
+            FinishPanel.SetActive(true);
+            lbc.enabled = false;
+            mc.enabled = false;
+            Time.timeScale = 0;
         }
-        Debug.Log("finished");
-        FinishPanel.SetActive(true);
-        lbc.enabled = false;
-        mc.enabled = false;
-        Time.timeScale = 0;
     }
 
     public void Retry()
