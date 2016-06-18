@@ -9,13 +9,18 @@ public class TutorialScript : MonoBehaviour
 
     void Start()
     {
+
         panel1 = GameObject.FindGameObjectWithTag("Panel1");
         panel2 = GameObject.FindGameObjectWithTag("Panel2");
         panel1.SetActive(false);
         panel2.SetActive(false);
 
+        if (GameController.controller.m_IsFirstTime)
+        {
 
-        StartCoroutine(waitABit());
+            StartCoroutine(waitABit());
+            GameController.controller.m_IsFirstTime = false;
+        }
     }
 
     IEnumerator waitABit()

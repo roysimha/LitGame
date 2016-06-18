@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public int m_NumberOfFireFlies { get; set; }
     public int m_CurLvllFireFlies { get; set; }
     public int m_GlobalScore { get; set; }
+    public bool m_IsFirstTime { get; set; }
 
     void Awake()
     {
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour
             m_LevelsCompleted = 0;
             m_NumberOfFireFlies = 0;
             m_CurLvllFireFlies = 0;
+            m_IsFirstTime = true;
         }
         else if (controller != this)
         {
@@ -46,6 +48,8 @@ public class GameController : MonoBehaviour
         data.GlobalScore = m_GlobalScore;
         data.LevelsCompleted = m_LevelsCompleted;
         data.NumberOfFireFlies = m_NumberOfFireFlies;
+        data.IsFirstTime = m_IsFirstTime;
+        
 
         bf.Serialize(file, data);
 
@@ -62,6 +66,8 @@ public class GameController : MonoBehaviour
         data.GlobalScore = m_GlobalScore;
         data.LevelsCompleted = m_LevelsCompleted;
         data.NumberOfFireFlies += m_CurLvllFireFlies;
+        data.IsFirstTime = m_IsFirstTime;
+        
 
         bf.Serialize(file, data);
         file.Close();
@@ -94,6 +100,7 @@ public class GameController : MonoBehaviour
             m_GlobalScore = data.GlobalScore;
             m_NumberOfFireFlies = data.NumberOfFireFlies;
             m_LevelsCompleted = data.LevelsCompleted;
+            m_IsFirstTime = data.IsFirstTime;
 
         }
         else
@@ -108,5 +115,6 @@ public class GameController : MonoBehaviour
         public int LevelsCompleted;
         public int NumberOfFireFlies;
         public int GlobalScore;
+        public bool IsFirstTime;
     }
 }
