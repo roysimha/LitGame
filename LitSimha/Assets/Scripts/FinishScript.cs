@@ -14,7 +14,7 @@ public class FinishScript : MonoBehaviour
 	private int prismHit=0;
 	private GameController gc;
   private ParticleHandler ph;
-    public Transform ClickUI;
+public Transform ClickUI;
     // Use this for initialization
     void Start()
     {
@@ -31,7 +31,16 @@ public class FinishScript : MonoBehaviour
         mc = GameObject.FindGameObjectWithTag("mirror").GetComponent<mirrorController>();
         FinishPanel.SetActive(false);
     }
-
+    private void OpenFinishUI()
+    {
+        if(ClickUI!=null)
+        ClickUI.gameObject.SetActive(true);
+    }
+    private void setFinishToFalse()
+    {
+        ph.DestroyParticles();
+        ClickUI.gameObject.SetActive(false);
+    }
     public void addHit()
     {
         prismHit++;
@@ -54,7 +63,7 @@ public class FinishScript : MonoBehaviour
         
         ph.addParticle(transform.position);
         yield return new WaitForSeconds(2);
-        int curFireFly = gc.getScore();
+        int curFireFly = 3;
             //int curScore = gc.getGlobalScore();
             for (int i = 3; i < curFireFly + 3; i++)
             {
@@ -73,11 +82,13 @@ public class FinishScript : MonoBehaviour
         lbc.enabled = false;
         mc.enabled = false;
         Time.timeScale = 0;
+
         GameController.controller.m_LevelsCompleted++;
         GameController.controller.UpdatePlayerData();
         Debug.Log(string.Format("Fireflys = {0}, LevelCompleted = {1}, Score = {2}", GameController.controller.m_CurLvllFireFlies, GameController.controller.m_LevelsCompleted, GameController.controller.m_GlobalScore));
         GameController.controller.m_CurLvllFireFlies = 0;
-            FinishPanel.SetActive(true);
+
+        FinishPanel.SetActive(true);
             lbc.enabled = false;
             mc.enabled = false;
             Time.timeScale = 0;

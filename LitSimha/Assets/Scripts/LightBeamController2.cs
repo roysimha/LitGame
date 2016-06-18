@@ -143,7 +143,7 @@ public bool isFinish;
 					break;
 
 				case "score":
-					gamecontroller.addScore();
+					gamecontroller.addScore(300);
                         hit.transform.gameObject.SetActive(false);
                         break;
 				default:
