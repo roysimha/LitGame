@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
@@ -6,12 +7,13 @@ using System;
 public class FinishScript : MonoBehaviour {
 
     private GameObject FinishPanel;
-    private bool m_isFinished;
     private GameObject mirror;
     private mirrorController mc;
     private LightBeamController2 lbc;
 	private int prismHit=0;
 	private GameController gc;
+  private ParticleHandler ph;
+    public Transform ClickUI;
     // Use this for initialization
     void Start () {
         Debug.Log("start");
@@ -19,16 +21,23 @@ public class FinishScript : MonoBehaviour {
 
         FinishPanel = GameObject.FindGameObjectWithTag("FinishPanel");
         lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
-        lbc.OnFinished.AddListener(finishTheLevel);
-        lbc.NotFinished.AddListener(setFinishToFalse);
+        lbc.OnFinished.AddListener(OpenFinishUI);
+        lbc.resetEverything.AddListener(setFinishToFalse);
+        ClickUI.gameObject.SetActive(false);
+        ClickUI.GetComponent<ButtonSprite>().onClick.AddListener(finishTheLevel);
+        ph = GetComponent<ParticleHandler>();
+        ph.setActivetoFalse();
         mc = GameObject.FindGameObjectWithTag("mirror").GetComponent<mirrorController>();
         FinishPanel.SetActive(false);
-        m_isFinished = false;
     }
-
+    private void OpenFinishUI()
+    {
+        ClickUI.gameObject.SetActive(true);
+    }
     private void setFinishToFalse()
     {
-        m_isFinished = false;
+        ph.DestroyParticles();
+        ClickUI.gameObject.SetActive(false);
     }
 
     public void addHit(){
@@ -36,22 +45,23 @@ public class FinishScript : MonoBehaviour {
         if (prismHit == 2)
             lbc.OnFinished.Invoke();
 	}
-    private void finishTheLevel()
-    {
-        m_isFinished = true;
-        StartCoroutine(FinishLevel());
-    }
+
 	// Update is called once per frame
 	void Update ()
     {
 	}
-
-    private IEnumerator FinishLevel()
+    private void finishTheLevel()
     {
-        yield return new WaitForSeconds(5);
-        if (m_isFinished)
-        {
-            int curFireFly = gc.getScore();
+        StartCoroutine(i_finishLevel());
+    }
+    private IEnumerator i_finishLevel()
+    {
+       
+        ph.startNewIteration();
+        
+        ph.addParticle(transform.position);
+        yield return new WaitForSeconds(2);
+        int curFireFly = gc.getScore();
             //int curScore = gc.getGlobalScore();
             for (int i = 3; i < curFireFly + 3; i++)
             {
@@ -70,7 +80,7 @@ public class FinishScript : MonoBehaviour {
             lbc.enabled = false;
             mc.enabled = false;
             Time.timeScale = 0;
-        }
+        
     }
 
     public void Retry()

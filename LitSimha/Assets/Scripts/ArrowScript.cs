@@ -8,7 +8,7 @@ public class ArrowScript : MonoBehaviour
     private float m_MaxAngle;
     private float baseAngle = 0.0f;
     public static bool pressOnRing = false;
-    public LightBeamController2 lbc;
+    //public LightBeamController2 lbc;
     public bool rotation = false;
     private float stepFactor = 1;
     //private bool startRotation = true;
@@ -20,7 +20,7 @@ public class ArrowScript : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(Vector3.right * Time.deltaTime);
+        //transform.Rotate(Vector3.right * Time.deltaTime);
     }
     public void setStepFactor(float step)
     {

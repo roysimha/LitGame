@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 	void Start ()
 	{
 	}
+
 	public void addScore()
 	{
 		CollectedScore++;

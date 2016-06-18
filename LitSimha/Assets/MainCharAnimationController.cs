@@ -12,7 +12,7 @@ public class MainCharAnimationController : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         spriteArray = new Sprite[NUMBEROFSPRITES];
             spriteArray = Resources.LoadAll<Sprite>("SpriteSheet_mainCharacter");
-        ChangeToAnimation(2);
+       ChangeToAnimation(1);
 	}
 
 	public void ChangeToAnimation(int i_index)
@@ -20,7 +20,8 @@ public class MainCharAnimationController : MonoBehaviour {
         sr.sprite = spriteArray[i_index];
     }
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 	
 	}
 }

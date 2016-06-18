@@ -26,17 +26,18 @@ public class LightBeamController2 : MonoBehaviour
 	private int numOfPrismsInScene = 0;
 	private ParticleHandler phChild;
     public UnityEvent OnFinished;
-    public UnityEvent NotFinished;
+    public UnityEvent resetEverything;
     private bool m_isFinished;
+    private Vector3 m_RayDirection;
 	// Use this for initialization
 	void Start ()
 	{
+        m_RayDirection = Vector3.right;
 		gamecontroller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		isFinish = false;
 		mLineRenderer = this.GetComponent<LineRenderer> ();
 		ph = GameObject.FindGameObjectWithTag ("Player").GetComponent<ParticleHandler> ();
 		phChild = ph.transform.GetChild (0).GetComponent<ParticleHandler> ();
-        StartCoroutine("startAnimationDelay");
 		ps = new prismController[30];
 		int i = 0;
 		foreach (GameObject g in GameObject.FindGameObjectsWithTag("Prism")) {
@@ -45,6 +46,10 @@ public class LightBeamController2 : MonoBehaviour
 			i++;
 		}
 	}
+    public void startRayDelay()
+    {
+        StartCoroutine(startAnimationDelay());
+    }
     IEnumerator startAnimationDelay()
     {
         ph.initializeStartParticles();
@@ -70,7 +75,11 @@ public class LightBeamController2 : MonoBehaviour
 
         }
 	}
-
+    public void setDirection(Vector3 angle)
+    {
+        m_RayDirection = angle;
+        LaserDown = true;
+    }
 	IEnumerator FireMahLazer ()
 	{
         //Debug.Log("Running");
@@ -82,12 +91,11 @@ public class LightBeamController2 : MonoBehaviour
         m_isFinished = false;
         ph.startNewIteration();
         phChild.startNewIteration();
-        Vector3 laserDirection = transform.right; //direction of the next laser
+        Vector3 laserDirection =m_RayDirection; //direction of the next laser
 		Vector3 lastLaserPosition = transform.localPosition; //origin of the next laser
 		mLineRenderer.SetVertexCount (1);
-		mLineRenderer.SetPosition (0, transform.position);
+		mLineRenderer.SetPosition (0, transform.position+new Vector3(0.4f,0.3f,0));
 		RaycastHit hit;
-        ParticleHandler currentHitParticleHandler=null;
 		while (loopActive) {
 			prismSet = false;
 			Ray ray = new Ray (lastLaserPosition, laserDirection);
@@ -95,10 +103,7 @@ public class LightBeamController2 : MonoBehaviour
 				switch (hit.transform.gameObject.tag) {
 				case "Finish":
                         OnFinished.Invoke();
-                        currentHitParticleHandler = hit.transform.gameObject.GetComponent<ParticleHandler>();
-                        currentHitParticleHandler.setActivetoFalse();
-                        currentHitParticleHandler.startNewIteration();
-                        currentHitParticleHandler.addParticle(hit.point);
+                        phChild.addParticle(hit.point);
                         hitFinishObject (ref vertexCounter, hit.point);
                         loopActive = false;
                         m_isFinished = true;
@@ -135,9 +140,9 @@ public class LightBeamController2 : MonoBehaviour
 					break;
 
 				case "score":
-					gamecontroller.addScore ();
-					hit.transform.gameObject.SetActive (false);
-					break;
+					gamecontroller.addScore();
+                        hit.transform.gameObject.SetActive(false);
+                        break;
 				default:
 					hitMiscObject (ref vertexCounter, hit.point, lastLaserPosition);
 					phChild.addParticle (hit.point);
@@ -164,7 +169,7 @@ public class LightBeamController2 : MonoBehaviour
 		}
         if (m_isFinished == false)
         {
-            NotFinished.Invoke();
+            resetEverything.Invoke();
         }
 		if (LaserDown) {
 			yield return new WaitForEndOfFrame ();
