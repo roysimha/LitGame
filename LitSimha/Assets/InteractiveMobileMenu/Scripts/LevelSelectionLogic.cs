@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class LevelSelectionLogic : MonoBehaviour {
@@ -81,7 +81,8 @@ public class LevelSelectionLogic : MonoBehaviour {
 			{
 				if(levelList[i].unlocked && levelList[i].LevelObject.bounds.Contains(touchPos) && touchTime < reactTime)
 				{
-					Application.LoadLevel(levelList[i].LevelIndex);
+                    
+                    Application.LoadLevel(levelList[i].LevelIndex);
 					PlayerPrefsX.SetVector3("currentCamPos", cam.transform.position);
 				}
 			}

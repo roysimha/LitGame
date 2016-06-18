@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 8c9c786fd2f79754db2a980d854b23ff
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: level_locked
+    21300002: level_unlocked
+    21300004: path
+    21300006: path_end
+    21300008: tree
+    21300010: stone_red
+    21300012: stats
+    21300014: stone_grey
+    21300016: star1
+    21300018: background
+    21300020: star2
+    21300022: star3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,7 +75,16 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 57.5, y: 71.5}
+        - {x: 14.5, y: 81.5}
+        - {x: -38.5, y: 81.5}
+        - {x: -81.5, y: 72.5}
+        - {x: -82.5, y: 54.5}
+        - {x: -82.5, y: -81.5}
+        - {x: 82.5, y: -81.5}
+        - {x: 82.5, y: 36.5}
+        - {x: 65.5, y: 68.5}
     - name: level_unlocked
       rect:
         serializedVersion: 2
@@ -74,7 +95,16 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 57.5, y: 71.5}
+        - {x: 14.5, y: 81.5}
+        - {x: -38.5, y: 81.5}
+        - {x: -81.5, y: 72.5}
+        - {x: -82.5, y: 54.5}
+        - {x: -82.5, y: -81.5}
+        - {x: 82.5, y: -81.5}
+        - {x: 82.5, y: 36.5}
+        - {x: 65.5, y: 68.5}
     - name: path
       rect:
         serializedVersion: 2
@@ -96,7 +126,12 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -41, y: 42.5}
+        - {x: -42, y: 40.5}
+        - {x: -42, y: -42.5}
+        - {x: 42, y: -42.5}
+        - {x: 42, y: 42.5}
     - name: tree
       rect:
         serializedVersion: 2
@@ -107,7 +142,17 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 33, y: 67}
+        - {x: -47, y: 67}
+        - {x: -53, y: 57}
+        - {x: -53, y: -43}
+        - {x: -40, y: -58}
+        - {x: -27, y: -67}
+        - {x: 43, y: -67}
+        - {x: 47, y: -52}
+        - {x: 53, y: -31}
+        - {x: 53, y: 49}
     - name: stone_red
       rect:
         serializedVersion: 2
@@ -118,7 +163,14 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -32, y: 33}
+        - {x: -36, y: 26}
+        - {x: -36, y: -31}
+        - {x: -32, y: -33}
+        - {x: 36, y: -33}
+        - {x: 36, y: 24}
+        - {x: 34, y: 33}
     - name: stats
       rect:
         serializedVersion: 2
@@ -129,7 +181,15 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 128, y: -21}
+        - {x: 128, y: 20}
+        - {x: 108, y: 40}
+        - {x: -97, y: 40}
+        - {x: -128, y: 21}
+        - {x: -128, y: -19}
+        - {x: -124, y: -40}
+        - {x: 116, y: -40}
     - name: stone_grey
       rect:
         serializedVersion: 2
@@ -140,7 +200,15 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -9, y: 22.5}
+        - {x: -18, y: 17.5}
+        - {x: -28, y: 7.5}
+        - {x: -28, y: -22.5}
+        - {x: 27, y: -22.5}
+        - {x: 28, y: -17.5}
+        - {x: 28, y: 18.5}
+        - {x: 19, y: 22.5}
     - name: star1
       rect:
         serializedVersion: 2
@@ -151,7 +219,13 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 127.5, y: 39}
+        - {x: -105.5, y: 39}
+        - {x: -127.5, y: 13}
+        - {x: -127.5, y: 1}
+        - {x: -118.5, y: -39}
+        - {x: 127.5, y: -39}
     - name: background
       rect:
         serializedVersion: 2
@@ -162,7 +236,11 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: -129.5, y: 173.5}
+        - {x: -129.5, y: -173.5}
+        - {x: 129.5, y: -173.5}
+        - {x: 129.5, y: 173.5}
     - name: star2
       rect:
         serializedVersion: 2
@@ -173,7 +251,18 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 119.5, y: -39}
+        - {x: 127.5, y: -28}
+        - {x: 127.5, y: 40}
+        - {x: -100.5, y: 40}
+        - {x: -127.5, y: 14}
+        - {x: -127.5, y: -14}
+        - {x: -114.5, y: -39}
+        - {x: -57.5, y: -39}
+        - {x: -53.5, y: -38}
+        - {x: -55.5, y: -29}
+        - {x: -36.5, y: -39}
     - name: star3
       rect:
         serializedVersion: 2
@@ -184,7 +273,15 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
+      outline:
+      - - {x: 128, y: -21}
+        - {x: 128, y: 20}
+        - {x: 108, y: 40}
+        - {x: -97, y: 40}
+        - {x: -128, y: 21}
+        - {x: -128, y: -19}
+        - {x: -124, y: -40}
+        - {x: 116, y: -40}
     outline: []
   spritePackingTag: 
   userData: 

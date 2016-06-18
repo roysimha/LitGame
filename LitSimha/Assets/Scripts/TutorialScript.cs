@@ -20,6 +20,7 @@ public class TutorialScript : MonoBehaviour
 
             StartCoroutine(waitABit());
             GameController.controller.m_IsFirstTime = false;
+            GameController.controller.UpdatePlayerData();
         }
     }
 

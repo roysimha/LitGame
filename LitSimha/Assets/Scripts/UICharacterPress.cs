@@ -59,15 +59,11 @@ public class UICharacterPress : MonoBehaviour {
         ang *= stepFactor;
         
         Quaternion angle = Quaternion.AngleAxis(ang, Vector3.forward);
-        Debug.Log(angle.eulerAngles.z);
-        Debug.Log("min" + m_MinAngle);
-        Debug.Log("max" + m_MaxAngle);
         if (!(angle.eulerAngles.z < m_MinAngle || angle.eulerAngles.z > m_MaxAngle))
          {
             lbc.setDirection(angle * Vector3.right);
             transform.rotation = angle;
             setRightAnimation(angle.eulerAngles.z);
-            Debug.Log("successuu");
         }
        
     }
