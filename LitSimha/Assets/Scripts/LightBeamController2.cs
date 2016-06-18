@@ -1,45 +1,55 @@
 ﻿
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+
 using System;
 
 [RequireComponent(typeof(LineRenderer))]
 
 public class LightBeamController2 : MonoBehaviour
 {
-    public bool isFinish;
-    public int laserDistance;
-    private LineRenderer mLineRenderer;
-    public string bounceTag;
-    public int maxBounce;
-    private float timer = 0;
-    private Vector3 prismDirection;
-    private ParticleHandler ph;
-    public bool LaserDown = false;
-    private prismController pc;
-    private prismController pcChild;
-    private prismController[] ps;
-    private GameController gamecontroller;
-    bool prismHit = true;
-    private int numOfPrismsInScene = 0;
-    private ParticleHandler phChild;
-    // Use this for initialization
-    void Start()
+public bool isFinish;
+	public int laserDistance;
+	private LineRenderer mLineRenderer;
+	public string bounceTag;
+	public int maxBounce;
+	private float timer = 0;
+	private Vector3 prismDirection;
+	private ParticleHandler ph;
+	public bool LaserDown = false;
+	private prismController pc;
+	private prismController pcChild;
+	private prismController[] ps;
+	private GameController gamecontroller;
+	bool prismHit = true;
+	private int numOfPrismsInScene = 0;
+	private ParticleHandler phChild;
+    public UnityEvent OnFinished;
+    public UnityEvent resetEverything;
+    private bool m_isFinished;
+    private Vector3 m_RayDirection;
+	// Use this for initialization
+	void Start ()
+	{
+        m_RayDirection = Vector3.right;
+		gamecontroller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		isFinish = false;
+		mLineRenderer = this.GetComponent<LineRenderer> ();
+		ph = GameObject.FindGameObjectWithTag ("Player").GetComponent<ParticleHandler> ();
+		phChild = ph.transform.GetChild (0).GetComponent<ParticleHandler> ();
+		ps = new prismController[30];
+		int i = 0;
+		foreach (GameObject g in GameObject.FindGameObjectsWithTag("Prism")) {
+			numOfPrismsInScene++;
+			ps [i] = g.GetComponent<prismController> ();
+			i++;
+		}
+	}
+    public void startRayDelay()
     {
-        gamecontroller = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        isFinish = false;
-        mLineRenderer = this.GetComponent<LineRenderer>();
-        ph = GameObject.FindGameObjectWithTag("Player").GetComponent<ParticleHandler>();
-        phChild = ph.transform.GetChild(0).GetComponent<ParticleHandler>();
-        StartCoroutine("startAnimationDelay");
-        ps = new prismController[30];
-        int i = 0;
-        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Prism"))
-        {
-            numOfPrismsInScene++;
-            ps[i] = g.GetComponent<prismController>();
-            i++;
-        }
+        StartCoroutine(startAnimationDelay());
+
     }
     IEnumerator startAnimationDelay()
     {
@@ -68,104 +78,101 @@ public class LightBeamController2 : MonoBehaviour
 
         }
     }
-
-    IEnumerator FireMahLazer()
+    public void setDirection(Vector3 angle)
     {
+        m_RayDirection = angle;
+        LaserDown = true;
+    }
+	IEnumerator FireMahLazer ()
+	{
         //Debug.Log("Running");
         mLineRenderer.enabled = true;
-        int laserReflected = 1; //How many times it got reflected
-        int vertexCounter = 1; //How many line segments are there
-        bool loopActive = true; //Is the reflecting loop active?
-        bool prismSet = false;
+		int laserReflected = 1; //How many times it got reflected
+		int vertexCounter = 1; //How many line segments are there
+		bool loopActive = true; //Is the reflecting loop active?
+		bool prismSet = false;
+        m_isFinished = false;
         ph.startNewIteration();
         phChild.startNewIteration();
-        Vector3 laserDirection = transform.right; //direction of the next laser
-        Vector3 lastLaserPosition = transform.localPosition; //origin of the next laser
-        mLineRenderer.SetVertexCount(1);
-        mLineRenderer.SetPosition(0, transform.position);
-        RaycastHit hit;
-        ParticleHandler currentHitParticleHandler = null;
-        while (loopActive)
-        {
-            prismSet = false;
-            Ray ray = new Ray(lastLaserPosition, laserDirection);
-            if ((Physics.Raycast(ray, out hit, laserDistance)))
-            {
-                switch (hit.transform.gameObject.tag)
-                {
-                    case "Finish":
-                        currentHitParticleHandler = hit.transform.gameObject.GetComponent<ParticleHandler>();
-                        currentHitParticleHandler.setActivetoFalse();
-                        currentHitParticleHandler.startNewIteration();
-                        currentHitParticleHandler.addParticle(hit.point);
-                        hitFinishObject(ref vertexCounter, hit.point);
-                        loopActive = false;
-
-                        break;
-
-                    case "portal":
-                        Vector3 secondLocationOfPortal = hit.transform.GetChild(0).transform.position;
-                        laserReflected++;
-                        hitPortalObject(ref vertexCounter, ref lastLaserPosition, secondLocationOfPortal, hit.point);
+        Vector3 laserDirection =m_RayDirection; //direction of the next laser
+		Vector3 lastLaserPosition = transform.localPosition; //origin of the next laser
+		mLineRenderer.SetVertexCount (1);
+		mLineRenderer.SetPosition (0, transform.position+new Vector3(0.4f,0.3f,0));
+		RaycastHit hit;
+		while (loopActive) {
+			prismSet = false;
+			Ray ray = new Ray (lastLaserPosition, laserDirection);
+			if ((Physics.Raycast (ray, out hit, laserDistance))) {
+				switch (hit.transform.gameObject.tag) {
+				case "Finish":
+                        OnFinished.Invoke();
                         phChild.addParticle(hit.point);
-                        phChild.addParticle(secondLocationOfPortal);
-                        break;
+                        hitFinishObject (ref vertexCounter, hit.point);
+                        loopActive = false;
+                        m_isFinished = true;
+					break;
 
-                    case "Prism":
-                        {
-                            hitMiscObject(ref vertexCounter, hit.point, lastLaserPosition);
-                            prismController p = hit.transform.GetComponent<prismController>();
-                            prismController pChild = p.transform.GetChild(0).GetComponent<prismController>();
-                            loopActive = false;
+				case "portal":
+					Vector3 secondLocationOfPortal = hit.transform.GetChild (0).transform.position;
+					laserReflected++;
+					hitPortalObject (ref vertexCounter, ref lastLaserPosition, secondLocationOfPortal, hit.point);
+					phChild.addParticle (hit.point);
+					phChild.addParticle (secondLocationOfPortal);
+					break;
 
-                            prismDirection = laserDirection;
-                            p.laserDirection = prismDirection + new Vector3(1, 0, 0);
-                            p.LaserDown = true;
-                            prismSet = true;
-                            pChild.laserDirection = prismDirection + new Vector3(-1, 0, 0);
-                            pChild.LaserDown = true;
-                            phChild.addParticle(hit.point);
-                        }
-                        break;
+				case "Prism":
+					{
+						hitMiscObject (ref vertexCounter, hit.point, lastLaserPosition);        
+						prismController p = hit.transform.GetComponent<prismController> ();
+						prismController pChild = p.transform.GetChild (0).GetComponent<prismController> ();
+						loopActive = false;
+                            
+						prismDirection = laserDirection;
+						p.laserDirection = prismDirection + new Vector3 (1, 0, 0);
+						p.LaserDown = true;
+						prismSet = true;
+						pChild.laserDirection = prismDirection + new Vector3 (-1, 0, 0);
+						pChild.LaserDown = true;
+						phChild.addParticle (hit.point);
+					}
+					break;
 
-                    case "mirror":
-                        laserReflected++;
-                        hitMirrorObject(ref vertexCounter, ref lastLaserPosition, ref laserDirection, hit);
-                        break;
+				case "mirror":
+					laserReflected++;
+					hitMirrorObject (ref vertexCounter, ref lastLaserPosition, ref laserDirection, hit);
+					break;
 
-                    case "FireFly":
-                        gamecontroller.addScore(300);
+				case "score":
+					gamecontroller.addScore();
                         hit.transform.gameObject.SetActive(false);
                         break;
-                    default:
-                        hitMiscObject(ref vertexCounter, hit.point, lastLaserPosition);
-                        phChild.addParticle(hit.point);
-                        loopActive = false;
-                        break;
-                }
-            }
-            else {
+				default:
+					hitMiscObject (ref vertexCounter, hit.point, lastLaserPosition);
+					phChild.addParticle (hit.point);
+					loopActive = false;
+					break;
+				}
+			} else {
 
 
-                laserReflected++;
-                vertexCounter++;
-                mLineRenderer.SetVertexCount(vertexCounter);
-                Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * laserDistance);
-                mLineRenderer.SetPosition(vertexCounter - 1, lastLaserPosition + (laserDirection.normalized * laserDistance));
+				laserReflected++;
+				vertexCounter++;
+				mLineRenderer.SetVertexCount (vertexCounter);
+				Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * laserDistance);
+				mLineRenderer.SetPosition (vertexCounter - 1, lastLaserPosition + (laserDirection.normalized * laserDistance));
 
-                loopActive = false;
-            }
-        }
-        if (laserReflected > maxBounce)
-            loopActive = false;
-        if (!prismSet)
+				loopActive = false;
+			}
+		}
+		if (laserReflected > maxBounce)
+			loopActive = false;
+		if (!prismSet) {
+			resetPrisms ();
+           
+		}
+        if (m_isFinished == false)
         {
-            resetPrisms();
-
-        }
-        if (currentHitParticleHandler != null)
-        {
-            // currentHitParticleHandler.DestroyParticles();
+            resetEverything.Invoke();
         }
         if (LaserDown)
         {

@@ -63,11 +63,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\CameraControls.cs" />
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\LevelSelectionLogic.cs" />
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\Saving and Loading\PlayerPrefsX.cs" />
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\Saving and Loading\SaveAndLoad.cs" />
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\Temp\FinishLevel.cs" />
+=======
+    <Compile Include="Assets\ButtonSprite.cs" />
+    <Compile Include="Assets\ClickHandler.cs" />
+    <Compile Include="Assets\MainCharAnimationController.cs" />
+>>>>>>> origin/roy
     <Compile Include="Assets\Scripts\ArrowScript.cs" />
     <Compile Include="Assets\Scripts\DeadMenuScript.cs" />
     <Compile Include="Assets\Scripts\FinishScript.cs" />
@@ -83,6 +89,7 @@
     <Compile Include="Assets\Scripts\PinchAndZoom.cs" />
     <Compile Include="Assets\Scripts\RotateController.cs" />
     <Compile Include="Assets\Scripts\TutorialScript.cs" />
+    <Compile Include="Assets\Scripts\UICharacterPress.cs" />
     <Compile Include="Assets\Scripts\UpandDown.cs" />
     <Compile Include="Assets\Scripts\animateBeam.cs" />
     <Compile Include="Assets\Scripts\animateOffset.cs" />

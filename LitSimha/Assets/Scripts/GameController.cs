@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
         data.LevelsCompleted = m_LevelsCompleted;
         data.NumberOfFireFlies = m_NumberOfFireFlies;
         data.IsFirstTime = m_IsFirstTime;
-        
+
 
         bf.Serialize(file, data);
 
@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
         data.LevelsCompleted = m_LevelsCompleted;
         data.NumberOfFireFlies += m_CurLvllFireFlies;
         data.IsFirstTime = m_IsFirstTime;
-        
+
 
         bf.Serialize(file, data);
         file.Close();
