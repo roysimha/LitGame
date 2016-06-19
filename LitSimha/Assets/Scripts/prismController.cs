@@ -15,18 +15,18 @@ public class prismController : MonoBehaviour
     public int maxBounce;
     private float timer = 0;
     private ParticleHandler ph;
+    private int FinishHit = 0;
     public bool LaserDown = false;
     bool prismHit = true;
 	private FinishScript fs;
     private ParticleHandler currentHitParticleHandler;
-
     // Use this for initialization
     void Start()
     {
         isFinish = false;
         mLineRenderer = this.GetComponent<LineRenderer>();
         ph = this.GetComponent<ParticleHandler>();
-		fs = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<FinishScript> ();
+		fs = GameObject.FindGameObjectWithTag ("PrismFinish").GetComponent<FinishScript> ();
     }
 
     // Update is called once per frame

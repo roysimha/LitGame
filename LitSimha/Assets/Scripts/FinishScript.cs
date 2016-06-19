@@ -51,6 +51,10 @@ public Transform ClickUI;
 	// Update is called once per frame
 	void Update ()
     {
+        if (prismHit == 2)
+        {
+            OpenFinishUI();
+        }
 	}
     private void finishTheLevel()
     {

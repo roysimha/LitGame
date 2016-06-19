@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class rotateScript : MonoBehaviour {
-	public int rotation;
+	public float rotation;
 	// Use this for initialization
 	void Start () {
 	

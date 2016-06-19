@@ -27,9 +27,11 @@ public bool isFinish;
 	private ParticleHandler phChild;
     public UnityEvent OnFinished;
     public UnityEvent resetEverything;
+    public Action<string> OnBeamCollision;
     private bool m_isFinished;
     private Vector3 m_RayDirection;
 	// Use this for initialization
+
 	void Start ()
 	{
         m_RayDirection = Vector3.right;
@@ -103,7 +105,8 @@ public bool isFinish;
 			prismSet = false;
 			Ray ray = new Ray (lastLaserPosition, laserDirection);
 			if ((Physics.Raycast (ray, out hit, laserDistance))) {
-				switch (hit.transform.gameObject.tag) {
+                OnBeamCollision.Invoke(hit.transform.gameObject.tag);
+                switch (hit.transform.gameObject.tag) {
 				case "Finish":
                         OnFinished.Invoke();
                         phChild.addParticle(hit.point);
