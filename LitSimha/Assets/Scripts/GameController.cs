@@ -13,7 +13,6 @@ public class GameController : MonoBehaviour
     public int m_CurLvllFireFlies { get; set; }
     public int m_GlobalScore { get; set; }
     public bool m_IsFirstTime { get; set; }
-
     void Awake()
     {
         if (controller == null)

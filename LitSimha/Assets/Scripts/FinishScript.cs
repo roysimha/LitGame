@@ -48,7 +48,15 @@ public class FinishScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
     }
+=======
+        if (prismHit == 2)
+        {
+            OpenFinishUI();
+        }
+	}
+>>>>>>> 00c6d36dbf96cfe7937750606524eb0eb34868ec
     private void finishTheLevel()
     {
         StartCoroutine(i_finishLevel());
