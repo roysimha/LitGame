@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/NewLevelSelect.unity
-=======
-- path: Assets/Scenes/Level8.unity
->>>>>>> 00c6d36dbf96cfe7937750606524eb0eb34868ec
+- path: Assets/Scenes/MainMenu.unity
   isLoaded: 1
   isActive: 1

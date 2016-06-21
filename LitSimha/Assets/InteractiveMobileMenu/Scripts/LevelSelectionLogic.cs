@@ -53,13 +53,19 @@ public class LevelSelectionLogic : MonoBehaviour {
 			//draw unlock level sprite if level is unlocked and conversely;
 			if(levelList[i].unlocked)
 			{
-				levelList[i].Stats.gameObject.SetActive(true);
-				levelList[i].LevelObject.sprite = levelList[i].levelSettings.LevelUnlocked;
+                if (levelList[i].Stats != null)
+                {
+                    levelList[i].Stats.gameObject.SetActive(true);
+                    levelList[i].LevelObject.sprite = levelList[i].levelSettings.LevelUnlocked;
+                }
 			}
 			else
 			{
-				levelList[i].Stats.gameObject.SetActive(false);
-				levelList[i].LevelObject.sprite = levelList[i].levelSettings.LevelLocked;
+                if (levelList[i].Stats != null)
+                {
+                    levelList[i].Stats.gameObject.SetActive(false);
+                    levelList[i].LevelObject.sprite = levelList[i].levelSettings.LevelLocked;
+                }
 			}
 		}
 	}

@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour {
         lbc.OnBeamCollision+=PlayCollisionSound;
         lbc.resetEverything.AddListener(LightBeamStarted);
         m_audioClipsDictionary = new Dictionary<string, AudioClip>();
-        m_AudioSource = GetComponent<AudioSource>();
+        
         m_LightBeam = lbc.GetComponent<AudioSource>();
         m_audioClipsDictionary.Add("score", Resources.Load("fireflyhit") as AudioClip);
         //.Add("Finish", Resources.Load("gamewinhit") as AudioClip);
@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour {
 
     }
     void Start () {
-        
+        m_AudioSource = GetComponent<AudioSource>();
     }
     private void LightBeamStarted()
     {
@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour {
             default:
                 break;
         }
-        if (ac!=null)
+        if (ac!=null&& m_AudioSource!=null)
         {
             m_AudioSource.clip = ac;
             m_AudioSource.Play();
