@@ -34,10 +34,9 @@ public class mirrorController : MonoBehaviour
 			transform.rotation = arrow.transform.rotation;
 		}
 		if (arrows != null) {
-           arrow.setLimits(minangle, maxangle);
-			if (arrow.rotation) {
-				lbc.LaserDown = true;
-				arrow.setStepFactor (StepFactor);
+          
+            if (arrow.rotation) {
+				
 			}
 		}
 	}
@@ -51,7 +50,7 @@ public class mirrorController : MonoBehaviour
 
 	void OnMouseDown ()
 	{
-		StartCoroutine (clickOnMirror ());
+        StartCoroutine (clickOnMirror ());
 
 
 		//mousey = Input.mousePosition.y;
@@ -65,9 +64,10 @@ public class mirrorController : MonoBehaviour
 		arrows = Instantiate (Resources.Load ("Arrows"), new Vector3 (transform.position.x, transform.position.y, transform.position.z), Quaternion.identity) as GameObject;
 		arrows.transform.rotation = transform.rotation;
 		arrow = arrows.GetComponent<ArrowScript> ();
-		lbc.LaserDown = true;
+        arrow.setLimits(minangle, maxangle);
+        arrow.setStepFactor(StepFactor);
 
-	}
+    }
 
 	public void turnOnHit ()
 	{

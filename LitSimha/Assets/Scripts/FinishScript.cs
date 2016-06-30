@@ -20,7 +20,7 @@ public class FinishScript : MonoBehaviour
         FinishPanel = GameObject.FindGameObjectWithTag("FinishPanel");
         lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
         lbc.OnFinished.AddListener(OpenFinishUI);
-        lbc.resetEverything.AddListener(setFinishToFalse);
+        lbc.resetEverythingBefore.AddListener(setFinishToFalse);
         ClickUI.gameObject.SetActive(false);
         ClickUI.GetComponent<ButtonSprite>().onClick.AddListener(finishTheLevel);
         ph = GetComponent<ParticleHandler>();

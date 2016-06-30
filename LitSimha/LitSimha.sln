@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LitSimha.CSharp", "LitSimha.CSharp.csproj", "{3F4D1855-D24B-274A-5638-AB996F81BBCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LitSimha.CSharp.Editor", "LitSimha.CSharp.Editor.csproj", "{943DE9BF-0CA5-FAA4-6F43-CA741413FD3C}"

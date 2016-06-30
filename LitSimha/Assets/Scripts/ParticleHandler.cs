@@ -30,7 +30,6 @@ public class ParticleHandler : MonoBehaviour {
         if (startParticle != null)
         {
             this.Start();
-            Debug.Log("lol");
             startParticleObject = (Instantiate(startParticle) as Transform).gameObject;
            
                 startParticleObject.SetActive(false);
@@ -81,7 +80,7 @@ public class ParticleHandler : MonoBehaviour {
     {
         if (currentIndex < maxParticlesInLevel)
         {
-            if (!isLocationInArray(Location, 0.1))
+            if (!isLocationInArray(Location, 0.4))
             {
                 Location += new Vector3(0, 0, -1);
                 particleObjects[currentIndex].transform.position = Location;

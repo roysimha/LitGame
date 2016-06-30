@@ -8,14 +8,14 @@ public class ArrowScript : MonoBehaviour
     private float m_MaxAngle;
     private float baseAngle = 0.0f;
     public static bool pressOnRing = false;
-    //public LightBeamController2 lbc;
+    public LightBeamController2 lbc;
     public bool rotation = false;
     private float stepFactor = 1;
     //private bool startRotation = true;
-    void start()
+    void Start()
     {
         rotation = false;
-        //lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
+        lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
     }
 
     void Update()
@@ -35,7 +35,6 @@ public class ArrowScript : MonoBehaviour
         pos = (Input.mousePosition - pos);
         baseAngle = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg;
         baseAngle -= Mathf.Atan2(transform.right.y, transform.right.x) * Mathf.Rad2Deg;
-
     }
 
     internal void setLimits(float minangle, float maxangle)
@@ -58,11 +57,18 @@ public class ArrowScript : MonoBehaviour
         Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
         pos = (Input.mousePosition - pos) ;
         float ang = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg - baseAngle;
-        ang *= stepFactor;
-       
+        float transformAngle = transform.eulerAngles.z;
+        Debug.Log("Angle" + ang);
+        Debug.Log("Base angle" + baseAngle);
+        Debug.Log("Transform angle: " + transform.eulerAngles.z);
+        Debug.Log("StepFactor: " + stepFactor);
+        Quaternion currentAngleVector =transform.rotation;
+        
         Quaternion angle = Quaternion.AngleAxis(ang, Vector3.forward);
-        if(!(angle.eulerAngles.z<m_MinAngle||angle.eulerAngles.z>m_MaxAngle))
-            transform.rotation = angle;
-        Debug.Log("success");
+        //if (!(angle.eulerAngles.z < m_MinAngle || angle.eulerAngles.z > m_MaxAngle))
+        //{
+            transform.rotation=angle;
+            lbc.invokeOnce();
+      //  }
     }
 }

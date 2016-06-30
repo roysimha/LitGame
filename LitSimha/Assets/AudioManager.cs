@@ -10,8 +10,8 @@ public class AudioManager : MonoBehaviour {
     // Use this for initialization
     public void Awake()
     {
-        lbc.OnBeamCollision+=PlayCollisionSound;
-        lbc.resetEverything.AddListener(LightBeamStarted);
+        lbc.AnnounceHit+=PlayCollisionSound;
+        lbc.resetEverythingAfter.AddListener(LightBeamStarted);
         m_audioClipsDictionary = new Dictionary<string, AudioClip>();
         
         m_LightBeam = lbc.GetComponent<AudioSource>();
