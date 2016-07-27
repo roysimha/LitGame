@@ -14,6 +14,11 @@ public class FinishScript : MonoBehaviour
     private int prismHit = 0;
     private ParticleHandler ph;
     public Transform ClickUI;
+    private GameObject backgroundObject;
+    private SpriteRenderer backgroundRenderer;
+    bool shouldSwitchScreens=false;
+    private float backgroundTransitionFactor;
+    private float resetvalue;
     // Use this for initialization
     void Start()
     {
@@ -27,16 +32,26 @@ public class FinishScript : MonoBehaviour
         ph.setActivetoFalse();
         mc = GameObject.FindGameObjectWithTag("mirror").GetComponent<mirrorController>();
         FinishPanel.SetActive(false);
+        resetvalue = 1;
+        backgroundObject = GameObject.Find("Background") ;
+        backgroundRenderer = backgroundObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     private void OpenFinishUI()
     {
-        if (ClickUI != null)
-            ClickUI.gameObject.SetActive(true);
+        //if (ClickUI != null)
+        //ClickUI.gameObject.SetActive(true);
+        if(resetvalue>0)
+            resetvalue *= -1;
+        shouldSwitchScreens = true;
     }
     private void setFinishToFalse()
     {
         ph.DestroyParticles();
         ClickUI.gameObject.SetActive(false);
+        shouldSwitchScreens = true;
+        if(resetvalue<0)
+            resetvalue *= -1f;
+        shouldSwitchScreens = true;
     }
     public void addHit()
     {
@@ -47,16 +62,32 @@ public class FinishScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         if (prismHit == 2)
         {
             OpenFinishUI();
+        }
+        if (shouldSwitchScreens)
+        {
+           Color tempColor = backgroundRenderer.color;
+            backgroundTransitionFactor = resetvalue;
+             backgroundTransitionFactor*=Time.deltaTime;
+            Debug.Log("delta : " + backgroundTransitionFactor);
+            tempColor.a = tempColor.a+backgroundTransitionFactor;
+            Debug.Log("Alpha:" + tempColor.a);
+            backgroundRenderer.color = tempColor; 
+            if (backgroundRenderer.color.a< 1 || backgroundRenderer.color.a > 254)
+            {
+                Debug.Log("Stopped"); 
+                shouldSwitchScreens = false;
+            }
         }
 	}
     private void finishTheLevel()
     {
         StartCoroutine(i_finishLevel());
     }
+
     private IEnumerator i_finishLevel()
     {
 
@@ -77,11 +108,10 @@ public class FinishScript : MonoBehaviour
 
         }
         Debug.Log("finished");
-
         FinishPanel.SetActive(true);
         lbc.enabled = false;
         mc.enabled = false;
-        Time.timeScale = 0;
+        //shouldSwitchScreens = true;
         Data.SaveData(SceneManager.GetActiveScene().buildIndex, true, curFireFly);
         GameController.controller.m_LevelsCompleted++;
         GameController.controller.UpdatePlayerData();
@@ -91,7 +121,7 @@ public class FinishScript : MonoBehaviour
         FinishPanel.SetActive(true);
         lbc.enabled = false;
         mc.enabled = false;
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
 
     }
 

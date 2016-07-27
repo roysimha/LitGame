@@ -1,20 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-
-    
     private GameObject pauseMenuPanel;
     private LightBeamController2 lbc;
     private mirrorController mc;
 
-    //variable for checking if the game is paused 
+    //variable for checking if the game is paused
     private bool isPaused = false;
-    
 
-    void Start()
+    private void Start()
     {
         lbc = GameObject.FindGameObjectWithTag("Player").GetComponent<LightBeamController2>();
         mc = GameObject.FindGameObjectWithTag("mirror").GetComponent<mirrorController>();
@@ -22,13 +18,10 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         pauseMenuPanel = GameObject.FindGameObjectWithTag("PauseMenu");
         pauseMenuPanel.SetActive(false);
-
     }
 
-    
     public void Update()
     {
-        
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             if (isPaused)
@@ -40,8 +33,6 @@ public class PauseMenu : MonoBehaviour
                 PauseGame();
             }
         }
-        
-            
     }
 
     //function to pause the game
@@ -52,9 +43,9 @@ public class PauseMenu : MonoBehaviour
         //freeze the timescale
         Time.timeScale = 0;
         lbc.enabled = false;
-        mc.enabled = false;    
-        
+        mc.enabled = false;
     }
+
     //function to unpause the game
     public void UnpauseGame()
     {
@@ -62,7 +53,7 @@ public class PauseMenu : MonoBehaviour
         //set back the time scale to normal time scale
         Time.timeScale = 1;
         isPaused = false;
-        lbc.enabled = true; 
+        lbc.enabled = true;
         mc.enabled = true;
     }
 

@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
 public class PinchAndZoom : MonoBehaviour
 {
-
     private float orthoZoomSpeed = 0.05f;        // The rate of change of the orthographic size in orthographic mode.
     private float orthoCamSize;
     private Vector3 camPos;
@@ -16,15 +13,15 @@ public class PinchAndZoom : MonoBehaviour
     public float topRightX;
     public static bool isPanning;        // Is the mycamera being panned?
     private Camera mycamera;
-    Vector3 bottomLeft;
-    Vector3 topRight;
+    private Vector3 bottomLeft;
+    private Vector3 topRight;
 
-    float cameraMaxY;
-    float cameraMinY;
-    float cameraMaxX;
-    float cameraMinX;
+    private float cameraMaxY;
+    private float cameraMinY;
+    private float cameraMaxX;
+    private float cameraMinX;
 
-    void Start()
+    private void Start()
     {
         ScreenWidth = Screen.width;
         SideMenuWidth = Screen.width * 0.1953f;
@@ -43,7 +40,7 @@ public class PinchAndZoom : MonoBehaviour
         cameraMinY = bottomLeft.y;
     }
 
-    void Update()
+    private void Update()
     {
 #if UNITY_EDITOR
         //click and drag
@@ -57,7 +54,6 @@ public class PinchAndZoom : MonoBehaviour
         }
 #endif
 
-
         // One Finger Pan
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
@@ -65,11 +61,10 @@ public class PinchAndZoom : MonoBehaviour
             //            Touch touchZero = Input.GetTouch(0);
             //            float x = touchZero.position.x * panSpeed;
             //            float y = touchZero.position.y * panSpeed;
-            float x =Input.GetTouch(0).deltaPosition.x * panSpeed;
+            float x = Input.GetTouch(0).deltaPosition.x * panSpeed;
             float y = Input.GetTouch(0).deltaPosition.y * panSpeed;
             transform.Translate(x, y, 0);
             isPanning = false;
-
         }
 
 #if UNITY_EDITOR
@@ -79,7 +74,7 @@ public class PinchAndZoom : MonoBehaviour
             Camera.main.orthographicSize = Camera.main.orthographicSize - orthoZoomSpeed;
         }
 
-        if ((Input.GetAxis("Mouse ScrollWheel") < 0) && Camera.main.orthographicSize < maxZoom) // back          
+        if ((Input.GetAxis("Mouse ScrollWheel") < 0) && Camera.main.orthographicSize < maxZoom) // back
         {
             Camera.main.orthographicSize = Camera.main.orthographicSize + orthoZoomSpeed;
         }
@@ -117,14 +112,12 @@ public class PinchAndZoom : MonoBehaviour
             }
         }
 
-
         // On double tap image will be set at original position and scale
         else if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began && Input.GetTouch(0).tapCount == 2)
         {
             mycamera.orthographicSize = orthoCamSize;
             Camera.main.transform.position = camPos;
         }
-
 
         //check if mycamera is out-of-bounds, if so, move back in-bounds
         topRight = mycamera.ScreenToWorldPoint(new Vector3(topRightX, mycamera.pixelHeight, -transform.position.z));
@@ -150,11 +143,10 @@ public class PinchAndZoom : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y + (cameraMinY - bottomLeft.y), transform.position.z);
         }
 
-
         // If back button press andriod
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
     }
-    }
+}

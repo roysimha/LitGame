@@ -1,18 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using UnityEngine.EventSystems;
 
-public class LevelManager : MonoBehaviour {
-
+public class LevelManager : MonoBehaviour
+{
     [System.Serializable]
     public class Level
     {
         public string LevelText;
         public int UnLocked;
         public bool isInteractable;
-
 
         public Button.ButtonClickedEvent OnClickEvent;
     }
@@ -21,14 +18,15 @@ public class LevelManager : MonoBehaviour {
     public Transform spacer;
     public List<Level> LevelList;
 
-	// Use this for initialization 
-	void Start () {
-        fillList();
-	}
-	
-	void fillList()
+    // Use this for initialization
+    private void Start()
     {
-        foreach(var level in LevelList)
+        fillList();
+    }
+
+    private void fillList()
+    {
+        foreach (var level in LevelList)
         {
             GameObject newButton = Instantiate(levelButton) as GameObject;
             //LevelButton button = newButton.GetComponent<LevelButton>();
@@ -36,7 +34,6 @@ public class LevelManager : MonoBehaviour {
             //button.LevelText.text = level.LevelText;
 
             newButton.transform.SetParent(spacer, false);
-
         }
     }
 }

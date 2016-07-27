@@ -1,10 +1,7 @@
-﻿
+﻿using System.Collections;
 using UnityEngine;
-using System.Collections;
-using System;
 
 [RequireComponent(typeof(LineRenderer))]
-
 public class prismController : MonoBehaviour
 {
     public bool isFinish;
@@ -17,20 +14,21 @@ public class prismController : MonoBehaviour
     private ParticleHandler ph;
     private int FinishHit = 0;
     public bool LaserDown = false;
-    bool prismHit = true;
-	private FinishScript fs;
+    private bool prismHit = true;
+    private FinishScript fs;
     private ParticleHandler currentHitParticleHandler;
+
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         isFinish = false;
         mLineRenderer = this.GetComponent<LineRenderer>();
         ph = this.GetComponent<ParticleHandler>();
-		fs = GameObject.FindGameObjectWithTag ("PrismFinish").GetComponent<FinishScript> ();
+        fs = GameObject.FindGameObjectWithTag("PrismFinish").GetComponent<FinishScript>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (LaserDown)
         {
@@ -39,15 +37,16 @@ public class prismController : MonoBehaviour
             LaserDown = false;
         }
     }
+
     public void clearPrism()
     {
         ph.startNewIteration();
         ph.DestroyParticles();
-            mLineRenderer.SetVertexCount(1);
-            mLineRenderer.SetPosition(0, transform.position);
-        
+        mLineRenderer.SetVertexCount(1);
+        mLineRenderer.SetPosition(0, transform.position);
     }
-    IEnumerator FireMahLazer()
+
+    private IEnumerator FireMahLazer()
     {
         //Debug.Log("Running");
         mLineRenderer.enabled = true;
@@ -102,8 +101,6 @@ public class prismController : MonoBehaviour
             }
             else
             {
-
-
                 laserReflected++;
                 vertexCounter++;
                 mLineRenderer.SetVertexCount(vertexCounter);
@@ -116,20 +113,20 @@ public class prismController : MonoBehaviour
         if (laserReflected > maxBounce)
             loopActive = false;
 
-
         ph.DestroyParticles();
-        
-      //  if (LaserDown)
-     //{
-          // yield return new WaitForEndOfFrame();
-           // timer += Time.deltaTime;
-           //StartCoroutine("FireMahLazer");
-       // }
-       // else
-       //{
-            yield return null;
-      // }
+
+        //  if (LaserDown)
+        //{
+        // yield return new WaitForEndOfFrame();
+        // timer += Time.deltaTime;
+        //StartCoroutine("FireMahLazer");
+        // }
+        // else
+        //{
+        yield return null;
+        // }
     }
+
     private void hitMiscObject(ref int vertexCounter, Vector3 hitPoint, Vector3 lastLaserPosition)
     {
         vertexCounter += 3;
@@ -138,6 +135,7 @@ public class prismController : MonoBehaviour
         mLineRenderer.SetPosition(vertexCounter - 2, hitPoint);
         mLineRenderer.SetPosition(vertexCounter - 1, hitPoint);
     }
+
     private void hitMirrorObject(ref int vertexCounter, ref Vector3 lastLaserPosition, ref Vector3 laserDirection, RaycastHit hit)
     {
         vertexCounter += 3;
@@ -150,6 +148,7 @@ public class prismController : MonoBehaviour
         ph.addParticle(hit.point);
         laserDirection = Vector3.Reflect(laserDirection, hit.normal);
     }
+
     private void hitPortalObject(ref int vertexCounter, ref Vector3 lastLaserPosition, Vector3 secondLocationOfPortal, Vector3 hitPoint)
     {
         vertexCounter += 6;
@@ -162,15 +161,14 @@ public class prismController : MonoBehaviour
         mLineRenderer.SetPosition(vertexCounter - 1, secondLocationOfPortal);
         lastLaserPosition = secondLocationOfPortal;
     }
+
     private void hitFinishObject(ref int vertexCounter, Vector3 location)
     {
-		if(!isFinish)
-		fs.addHit ();
-		isFinish = true;
+        if (!isFinish)
+            fs.addHit();
+        isFinish = true;
         vertexCounter++;
         mLineRenderer.SetVertexCount(vertexCounter);
         mLineRenderer.SetPosition(vertexCounter - 1, location);
     }
 }
-
-

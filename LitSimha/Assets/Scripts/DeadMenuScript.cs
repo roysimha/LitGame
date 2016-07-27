@@ -1,21 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 using UnityEngine.SceneManagement;
 
-public class DeadMenuScript : MonoBehaviour {
+public class DeadMenuScript : MonoBehaviour
+{
     private bool dead;
     public GameObject deadMenu;
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    private void Start()
+    {
         deadMenu.SetActive(false);
     }
 
-    
-
-
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    private void Update()
+    {
         if (dead)
         {
             popDeadMenu();
@@ -25,7 +24,7 @@ public class DeadMenuScript : MonoBehaviour {
         {
             dead = true;
         }
-	}
+    }
 
     public void Retry()
     {

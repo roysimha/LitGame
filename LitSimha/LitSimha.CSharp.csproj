@@ -78,6 +78,7 @@
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\Saving and Loading\SaveAndLoad.cs" />
     <Compile Include="Assets\InteractiveMobileMenu\Scripts\Temp\FinishLevel.cs" />
     <Compile Include="Assets\MainCharAnimationController.cs" />
+    <Compile Include="Assets\MainMenuCharHandler.cs" />
     <Compile Include="Assets\Scripts\ArrowScript.cs" />
     <Compile Include="Assets\Scripts\DeadMenuScript.cs" />
     <Compile Include="Assets\Scripts\FinishScript.cs" />
@@ -90,7 +91,10 @@
     <Compile Include="Assets\Scripts\ParticleHandler.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\PinchAndZoom.cs" />
+    <Compile Include="Assets\Scripts\PrismController2.cs" />
+    <Compile Include="Assets\Scripts\PrismSplitter.cs" />
     <Compile Include="Assets\Scripts\RotateController.cs" />
+    <Compile Include="Assets\Scripts\Static2DCollisonHandler.cs" />
     <Compile Include="Assets\Scripts\TutorialScript.cs" />
     <Compile Include="Assets\Scripts\UICharacterPress.cs" />
     <Compile Include="Assets\Scripts\UpandDown.cs" />

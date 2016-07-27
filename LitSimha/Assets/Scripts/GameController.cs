@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
@@ -13,7 +12,8 @@ public class GameController : MonoBehaviour
     public int m_CurLvllFireFlies { get; set; }
     public int m_GlobalScore { get; set; }
     public bool m_IsFirstTime { get; set; }
-    void Awake()
+
+    private void Awake()
     {
         if (controller == null)
         {
@@ -49,7 +49,6 @@ public class GameController : MonoBehaviour
         data.NumberOfFireFlies = m_NumberOfFireFlies;
         data.IsFirstTime = m_IsFirstTime;
 
-
         bf.Serialize(file, data);
 
         file.Close();
@@ -66,7 +65,6 @@ public class GameController : MonoBehaviour
         data.LevelsCompleted = m_LevelsCompleted;
         data.NumberOfFireFlies += m_CurLvllFireFlies;
         data.IsFirstTime = m_IsFirstTime;
-
 
         bf.Serialize(file, data);
         file.Close();
@@ -100,7 +98,6 @@ public class GameController : MonoBehaviour
             m_NumberOfFireFlies = data.NumberOfFireFlies;
             m_LevelsCompleted = data.LevelsCompleted;
             m_IsFirstTime = data.IsFirstTime;
-
         }
         else
         {
@@ -109,7 +106,7 @@ public class GameController : MonoBehaviour
     }
 
     [Serializable]
-    class PlayerData
+    private class PlayerData
     {
         public int LevelsCompleted;
         public int NumberOfFireFlies;

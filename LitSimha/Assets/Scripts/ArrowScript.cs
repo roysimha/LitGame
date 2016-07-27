@@ -58,10 +58,6 @@ public class ArrowScript : MonoBehaviour
         pos = (Input.mousePosition - pos) ;
         float ang = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg - baseAngle;
         float transformAngle = transform.eulerAngles.z;
-        Debug.Log("Angle" + ang);
-        Debug.Log("Base angle" + baseAngle);
-        Debug.Log("Transform angle: " + transform.eulerAngles.z);
-        Debug.Log("StepFactor: " + stepFactor);
         Quaternion currentAngleVector =transform.rotation;
         
         Quaternion angle = Quaternion.AngleAxis(ang, Vector3.forward);
